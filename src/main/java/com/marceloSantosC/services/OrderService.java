@@ -14,8 +14,6 @@ public class OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	private OrderService() {}
-	
 	public List<Order> findAll() {
 		return orderRepository.findAll();
 	}
