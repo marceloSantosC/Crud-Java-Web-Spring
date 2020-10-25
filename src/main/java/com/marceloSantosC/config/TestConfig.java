@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.marceloSantosC.entities.Category;
 import com.marceloSantosC.entities.Order;
 import com.marceloSantosC.entities.OrderItem;
+import com.marceloSantosC.entities.Payment;
 import com.marceloSantosC.entities.Product;
 import com.marceloSantosC.entities.User;
 import com.marceloSantosC.entities.enums.OrderStatus;
@@ -66,7 +67,6 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi2 = new OrderItem(null, o1, p3, 1, p3.getPrice());
 		OrderItem oi3 = new OrderItem(null, o2, p3, 2, p3.getPrice());
 		OrderItem oi4 = new OrderItem(null, o3, p5, 2, p5.getPrice()); 
-	
 
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
@@ -74,7 +74,9 @@ public class TestConfig implements CommandLineRunner{
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		OrderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 		
-		
+		Payment pay1 = new Payment(null, Instant.parse("2020-10-10T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+		orderRepository.save(o1);
 	}
 	
 	
