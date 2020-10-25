@@ -100,6 +100,13 @@ public class Order implements Serializable {
 		this.payment = payment;
 	}
 	
+	public Double getTotal() {
+		Double total = 0.0;
+		for (OrderItem oi: this.items) {
+			total += oi.getSubtotal();
+		}
+		return total;
+	}
 	
 	@Override
 	public int hashCode() {
