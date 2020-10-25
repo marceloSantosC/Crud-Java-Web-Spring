@@ -22,5 +22,25 @@ public class UserService {
 		Optional<User> user = userRepository.findById(id);
 		return user.get();
 	}
+	
+	public User insert(User user) {
+		return userRepository.save(user);
+	}
+	
+	public void delete(Long id) {
+		this.userRepository.deleteById(id);
+	}
+	
+	public User update(Long id, User user) {
+		User entity = userRepository.getOne(id);
+		this.updateData(user, entity);
+		return userRepository.save(entity);
+	}
+	
+	public void updateData(User user, User entity) {
+		entity.setEmail(user.getEmail());
+		entity.setName(user.getName());
+		entity.setPhone(user.getPhone());
+	}
 
 }
