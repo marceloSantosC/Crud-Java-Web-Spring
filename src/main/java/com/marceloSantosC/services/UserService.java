@@ -3,11 +3,15 @@ package com.marceloSantosC.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.marceloSantosC.entities.User;
 import com.marceloSantosC.repositories.UserRepository;
+import com.marceloSantosC.services.exception.DatabaseException;
 import com.marceloSantosC.services.exception.ResourceNotFoundException;
 
 @Service
@@ -29,7 +33,14 @@ public class UserService {
 	}
 	
 	public void delete(Long id) {
-		this.userRepository.deleteById(id);
+		try {
+			this.userRepository.deleteById(id);
+		} catch(EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch(ConstraintViolationException e) {
+			throw new DatabaseException(id);
+		}
+
 	}
 	
 	public User update(Long id, User user) {
